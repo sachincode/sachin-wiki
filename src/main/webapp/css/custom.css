@@ -1,0 +1,24 @@
+
+/* Custom styles for Confluence (included for all themes by default) */
+
+#splitter-sidebar ul li{border:none}
+#splitter-sidebar h3 {border:none}  
+#splitter-sidebar .update-item-changes{display:none}
+body { 
+font-size: 14px; 
+} 
+.wiki-content, 
+.wiki-content p, 
+.wiki-content table, 
+.wiki-content tr, 
+.wiki-content td, 
+.wiki-content th, 
+.wiki-content ol, 
+.wiki-content ul, 
+.wiki-content li {   
+font-size: 14px; 
+}
+
+/* End custom styles for Confluence */
+
+

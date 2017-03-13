@@ -1,0 +1,50 @@
+<div class="col-xs-12">
+<div class="wiki-content">
+    <!-- wiki content -->
+    <h5><a name="%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB1-0%E3%80%81titanhbase%E7%9A%84%E9%85%8D%E7%BD%AE"></a><b>0、titan hbase 的配置</b></h5>
+
+    <p>在hbase-site.xml中有配置是</p>
+
+    <div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java"> &lt;property&gt;
+    &lt;name&gt;zookeeper.znode.parent&lt;/name&gt;
+    &lt;value&gt;/hbase/testnn&lt;/value&gt;
+&lt;/property&gt;
+</pre>
+    </div></div>
+    <p>但是在官方文档里面的hbase配置项说明里面并没有介绍如何配置该参数，最后谷歌到这个配置项</p>
+
+    <p>storage.hbase.ext.zookeeper.znode.parent=/hbase/testnn</p>
+
+
+    <h5><a name="%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB1-1%E3%80%81%E5%90%AF%E5%8A%A8titanserver%EF%BC%8C%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8hbase%E5%AD%98%E5%82%A8%EF%BC%8C%E5%90%AF%E5%8A%A8%E6%97%B6%E6%8A%A5%E9%94%99%EF%BC%9A"></a>1、启动titan server，配置使用hbase存储，启动时报错：</h5>
+
+    <p>org.apache.hadoop.hbase.NamespaceNotFoundException: titan</p>
+
+    <p>最后问题是，在titan-hbase的配置文件中在配置hbase table name的时候表名使用了分号</p>
+
+    <p>storage.hbase.table=titan:zsc</p>
+
+    <p>上面这个配置是错误的，把分号去掉之后就启动成功了</p>
+
+    <p>storage.hbase.table=titanzsc</p>
+
+    <p>但是hbase里面实际是可以使用分号分隔的表名的</p>
+
+    <h5><a name="%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB1-2%E3%80%81%E5%90%AF%E5%8A%A8titan%E4%B9%8B%E5%90%8E%EF%BC%8C%E4%BC%9A%E4%B8%80%E7%9B%B4%E6%9C%89%E8%BF%99%E4%B8%AA%E4%BF%A1%E6%81%AF%EF%BC%8C%E6%AF%8F%E9%9A%9445s%E6%89%93%E5%8D%B0%E4%B8%80%E6%AC%A1"></a>2、启动titan之后，会一直有这个信息，每隔4-5s打印一次</h5>
+
+    <blockquote>
+        <p>4206666 [pool-7-thread-1] INFO &nbsp;org.apache.zookeeper.ZooKeeper &nbsp;- Initiating client connection, connectString=l-hbase2.dba.dev.cn0.qunar.com:2181,l-hbase1.dba.dev.cn0.qunar.com:2181,l-hbase3.dba.dev.cn0.qunar.com:2181 sessionTimeout=90000 watcher=hconnection-0x1a87cc03, quorum=l-hbase2.dba.dev.cn0.qunar.com:2181,l-hbase1.dba.dev.cn0.qunar.com:2181,l-hbase3.dba.dev.cn0.qunar.com:2181, baseZNode=/hbase/testnn<br>
+            4206666 [pool-7-thread-1] INFO &nbsp;org.apache.hadoop.hbase.zookeeper.RecoverableZooKeeper &nbsp;- Process identifier=hconnection-0x1a87cc03 connecting to ZooKeeper ensemble=l-hbase2.dba.dev.cn0.qunar.com:2181,l-hbase1.dba.dev.cn0.qunar.com:2181,l-hbase3.dba.dev.cn0.qunar.com:2181<br>
+            4206667 [pool-7-thread-1-SendThread(l-hbase3.dba.dev.cn0.qunar.com:2181)] INFO &nbsp;org.apache.zookeeper.ClientCnxn &nbsp;- Opening socket connection to server l-hbase3.dba.dev.cn0.qunar.com/10.86.36.219:2181. Will not attempt to authenticate using SASL (unknown error)<br>
+            4206667 [pool-7-thread-1-SendThread(l-hbase3.dba.dev.cn0.qunar.com:2181)] INFO &nbsp;org.apache.zookeeper.ClientCnxn &nbsp;- Socket connection established to l-hbase3.dba.dev.cn0.qunar.com/10.86.36.219:2181, initiating session<br>
+            4206669 [pool-7-thread-1-SendThread(l-hbase3.dba.dev.cn0.qunar.com:2181)] INFO &nbsp;org.apache.zookeeper.ClientCnxn &nbsp;- Session establishment complete on server l-hbase3.dba.dev.cn0.qunar.com/10.86.36.219:2181, sessionid = 0x354600448628b95, negotiated timeout = 40000<br>
+            4206674 [pool-7-thread-1] INFO &nbsp;org.apache.hadoop.hbase.client.HConnectionManager$HConnectionImplementation &nbsp;- Closing zookeeper sessionid=0x354600448628b95<br>
+            4206676 [pool-7-thread-1] INFO &nbsp;org.apache.zookeeper.ZooKeeper &nbsp;- Session: 0x354600448628b95 closed<br>
+            4206676 [pool-7-thread-1-EventThread] INFO &nbsp;org.apache.zookeeper.ClientCnxn &nbsp;- EventThread shut down</p></blockquote>
+    <p>貌似是一直在建立hbase链接，然后关闭这个链接</p>
+
+    <p><a href="https://groups.google.com/forum/#!topic/aureliusgraphs/xJjMTioOAvM" class="external-link" rel="nofollow">https://groups.google.com/forum/#!topic/aureliusgraphs/xJjMTioOAvM|https://groups.google.com/forum/#!topic/aureliusgraphs/xJjMTioOAvM</a></p>
+</div>
+</div>
+#include('inc/script.vm')

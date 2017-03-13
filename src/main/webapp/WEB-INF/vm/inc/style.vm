@@ -1,0 +1,27 @@
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/css/font-awesome.min.css" />
+<link rel="stylesheet" href="/css/font-google.css" />
+<link rel="stylesheet" href="/css/ace.min.css" />
+<link rel="stylesheet" href="/css/app.css" />
+<link rel="stylesheet" href="/css/new-hf-base.css" />
+<link rel="stylesheet" href="/css/new-hf.css" />
+
+<!-- include system css resources -->
+<link type="text/css" rel="stylesheet" href="/css/batch.css" media="all">
+<!--[if IE]>
+<link type="text/css" rel="stylesheet" href="/css/batch.css?ieonly=true" media="all">
+<![endif]-->
+<!--
+<link type="text/css" rel="stylesheet" href="/css/media-print-batch.css" media="print">
+<link type="text/css" rel="stylesheet" href="/css/confluence.macros.advanced.fancy-box.css" media="all">
+<link type="text/css" rel="stylesheet" href="/css/com.atlassian.confluence.plugins.drag-and-drop.support.css" media="all">
+<link type="text/css" rel="stylesheet" href="/css/confluence.web.resources.labels-editor.css" media="all">
+-->
+<!-- end system css resources -->
+
+<link rel="stylesheet" href="/css/combined.css" type="text/css">
+
+<!-- <link rel="stylesheet" href="/css/colors.css" type="text/css"> -->
+<link rel="stylesheet" href="/css/custom.css" type="text/css">
+<!-- <link rel="stylesheet" href="/css/default-theme.css" type="text/css"> -->
+<link rel="stylesheet" href="/css/splitter.css" type="text/css">

@@ -1,0 +1,120 @@
+<div class="col-xs-12">
+    <div class="wiki-content">
+        <!-- wiki content -->
+        <h3><a name="IDEAkey%E7%94%9F%E6%88%90%E4%BB%A3%E7%A0%81-IDEAkey%E7%94%9F%E6%88%90%E7%9A%84java%E4%BB%A3%E7%A0%81"></a>IDEA key 生成的java代码</h3>
+
+        <p>已测试，运行输入注册用户名，即可生成key</p>
+        <div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java"><span class="code-keyword">import</span> java.math.BigInteger;
+<span class="code-keyword">import</span> java.util.Date;
+<span class="code-keyword">import</span> java.util.Random;
+<span class="code-keyword">import</span> java.util.Scanner;
+<span class="code-keyword">import</span> java.util.zip.CRC32;
+
+<span class="code-keyword">public</span> class IDEAKeyGen {
+&nbsp; <span class="code-keyword">public</span> <span class="code-keyword">static</span> <span class="code-object">short</span> getCRC(<span class="code-object">String</span> s, <span class="code-object">int</span> i, <span class="code-object">byte</span> bytes[]){
+&nbsp; &nbsp; CRC32 crc32 = <span class="code-keyword">new</span> CRC32();
+&nbsp; &nbsp; <span class="code-keyword">if</span> (s != <span class="code-keyword">null</span>)
+&nbsp; &nbsp; {
+&nbsp; &nbsp; &nbsp; <span class="code-keyword">for</span> (<span class="code-object">int</span> j = 0; j &lt; s.length(); j++)
+&nbsp; &nbsp; &nbsp; {
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="code-object">char</span> c = s.charAt(j);
+&nbsp; &nbsp; &nbsp; &nbsp; crc32.update(c);
+&nbsp; &nbsp; &nbsp; }
+&nbsp; &nbsp; }
+&nbsp; &nbsp; crc32.update(i);
+&nbsp; &nbsp; crc32.update(i &gt;&gt; 8);
+&nbsp; &nbsp; crc32.update(i &gt;&gt; 16);
+&nbsp; &nbsp; crc32.update(i &gt;&gt; 24);
+&nbsp; &nbsp; <span class="code-keyword">for</span> (<span class="code-object">int</span> k = 0; k &lt; bytes.length - 2; k++)
+&nbsp; &nbsp; {
+&nbsp; &nbsp; &nbsp; <span class="code-object">byte</span> byte0 = bytes[k];
+&nbsp; &nbsp; &nbsp; crc32.update(byte0);
+&nbsp; &nbsp; }
+&nbsp; &nbsp; <span class="code-keyword">return</span> (<span class="code-object">short</span>) (<span class="code-object">int</span>) crc32.getValue();
+&nbsp; }
+&nbsp; <span class="code-keyword">public</span> <span class="code-keyword">static</span> <span class="code-object">String</span> encodeGroups(BigInteger biginteger){
+&nbsp; &nbsp; BigInteger beginner1 = BigInteger.valueOf(0x39aa400L);
+&nbsp; &nbsp; StringBuilder sb = <span class="code-keyword">new</span> StringBuilder();
+&nbsp; &nbsp; <span class="code-keyword">for</span> (<span class="code-object">int</span> i = 0; biginteger.compareTo(BigInteger.ZERO) != 0; i++)
+&nbsp; &nbsp; {
+&nbsp; &nbsp; &nbsp; <span class="code-object">int</span> j = biginteger.mod(beginner1).intValue();
+&nbsp; &nbsp; &nbsp; <span class="code-object">String</span> s1 = encodeGroup(j);
+&nbsp; &nbsp; &nbsp; <span class="code-keyword">if</span> (i &gt; 0)
+&nbsp; &nbsp; &nbsp; {
+&nbsp; &nbsp; &nbsp; &nbsp; sb.append(<span class="code-quote">"-"</span>);
+&nbsp; &nbsp; &nbsp; }
+&nbsp; &nbsp; &nbsp; sb.append(s1);
+&nbsp; &nbsp; &nbsp; biginteger = biginteger.divide(beginner1);
+&nbsp; &nbsp; }
+&nbsp; &nbsp; <span class="code-keyword">return</span> sb.toString();
+&nbsp; }
+&nbsp; <span class="code-keyword">public</span> <span class="code-keyword">static</span> <span class="code-object">String</span> encodeGroup(<span class="code-object">int</span> i){
+&nbsp; &nbsp; StringBuilder sb = <span class="code-keyword">new</span> StringBuilder();
+&nbsp; &nbsp; <span class="code-keyword">for</span> (<span class="code-object">int</span> j = 0; j &lt; 5; j++)
+&nbsp; &nbsp; {
+&nbsp; &nbsp; &nbsp; <span class="code-object">int</span> k = i % 36;
+&nbsp; &nbsp; &nbsp; <span class="code-object">char</span> c;
+&nbsp; &nbsp; &nbsp; <span class="code-keyword">if</span> (k &lt; 10)
+&nbsp; &nbsp; &nbsp; {
+&nbsp; &nbsp; &nbsp; &nbsp; c = (<span class="code-object">char</span>) (48 + k);
+&nbsp; &nbsp; &nbsp; }
+&nbsp; &nbsp; &nbsp; <span class="code-keyword">else</span>
+&nbsp; &nbsp; &nbsp; {
+&nbsp; &nbsp; &nbsp; &nbsp; c = (<span class="code-object">char</span>) ((65 + k) - 10);
+&nbsp; &nbsp; &nbsp; }
+&nbsp; &nbsp; &nbsp; sb.append(c);
+&nbsp; &nbsp; &nbsp; i /= 36;
+&nbsp; &nbsp; }
+&nbsp; &nbsp; <span class="code-keyword">return</span> sb.toString();
+&nbsp; }
+&nbsp; <span class="code-keyword">public</span> <span class="code-keyword">static</span> <span class="code-object">String</span> MakeKey(<span class="code-object">String</span> name, <span class="code-object">int</span> days, <span class="code-object">int</span> id){
+&nbsp; &nbsp; id %= 100000;
+&nbsp; &nbsp; <span class="code-object">byte</span> bkey[] = <span class="code-keyword">new</span> <span class="code-object">byte</span>[12];
+&nbsp; &nbsp; bkey[0] = (<span class="code-object">byte</span>) 1; <span class="code-comment">// Product type: IntelliJ IDEA is 1
+</span>&nbsp; &nbsp; bkey[1] = 14; <span class="code-comment">// version
+</span>&nbsp; &nbsp; Date d = <span class="code-keyword">new</span> Date();
+&nbsp; &nbsp; <span class="code-object">long</span> ld = (d.getTime() &gt;&gt; 16);
+&nbsp; &nbsp; bkey[2] = (<span class="code-object">byte</span>) (ld &amp; 255);
+&nbsp; &nbsp; bkey[3] = (<span class="code-object">byte</span>) ((ld &gt;&gt; 8) &amp; 255);
+&nbsp; &nbsp; bkey[4] = (<span class="code-object">byte</span>) ((ld &gt;&gt; 16) &amp; 255);
+&nbsp; &nbsp; bkey[5] = (<span class="code-object">byte</span>) ((ld &gt;&gt; 24) &amp; 255);
+&nbsp; &nbsp; days &amp;= 0xffff;
+&nbsp; &nbsp; bkey[6] = (<span class="code-object">byte</span>) (days &amp; 255);
+&nbsp; &nbsp; bkey[7] = (<span class="code-object">byte</span>) ((days &gt;&gt; 8) &amp; 255);
+&nbsp; &nbsp; bkey[8] = 105;
+&nbsp; &nbsp; bkey[9] = -59;
+&nbsp; &nbsp; bkey[10] = 0;
+&nbsp; &nbsp; bkey[11] = 0;
+&nbsp; &nbsp; <span class="code-object">int</span> w = getCRC(name, id % 100000, bkey);
+&nbsp; &nbsp; bkey[10] = (<span class="code-object">byte</span>) (w &amp; 255);
+&nbsp; &nbsp; bkey[11] = (<span class="code-object">byte</span>) ((w &gt;&gt; 8) &amp; 255);
+&nbsp; &nbsp; BigInteger pow = <span class="code-keyword">new</span> BigInteger(<span class="code-quote">"89126272330128007543578052027888001981"</span>, 10);
+&nbsp; &nbsp; BigInteger mod = <span class="code-keyword">new</span> BigInteger(<span class="code-quote">"86f71688cdd2612ca117d1f54bdae029"</span>, 16);
+&nbsp; &nbsp; BigInteger k0 = <span class="code-keyword">new</span> BigInteger(bkey);
+&nbsp; &nbsp; BigInteger k1 = k0.modPow(pow, mod);
+&nbsp; &nbsp; <span class="code-object">String</span> s0 = <span class="code-object">Integer</span>.toString(id);
+&nbsp; &nbsp; <span class="code-object">String</span> sz = <span class="code-quote">"0"</span>;
+&nbsp; &nbsp; <span class="code-keyword">while</span> (s0.length() != 5)
+&nbsp; &nbsp; {
+&nbsp; &nbsp; &nbsp; s0 = sz.concat(s0);
+&nbsp; &nbsp; }
+&nbsp; &nbsp; s0 = s0.concat(<span class="code-quote">"-"</span>);
+&nbsp; &nbsp; <span class="code-object">String</span> s1 = encodeGroups(k1);
+&nbsp; &nbsp; s0 = s0.concat(s1);
+&nbsp; &nbsp; <span class="code-keyword">return</span> s0;
+&nbsp; }
+&nbsp; <span class="code-keyword">public</span> <span class="code-keyword">static</span> void main(<span class="code-object">String</span>[] args){
+&nbsp; &nbsp; <span class="code-object">System</span>.out.println(<span class="code-quote">"请输入用户名:"</span>);
+&nbsp; &nbsp; Scanner scanner = <span class="code-keyword">new</span> Scanner(<span class="code-object">System</span>.in);
+&nbsp; &nbsp; <span class="code-object">String</span> username = scanner.next();
+&nbsp; &nbsp; Random r = <span class="code-keyword">new</span> Random();
+&nbsp; &nbsp; <span class="code-object">System</span>.out.println(MakeKey(username, 0, r.nextInt(100000)));
+&nbsp; &nbsp; scanner.close();
+&nbsp; }
+}
+</pre>
+        </div></div>
+    </div>
+</div>
+#include('inc/script.vm')

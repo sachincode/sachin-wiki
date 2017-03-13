@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{MM-dd HH:mm:ss.SSS} %-5p %c{0}:%L [%.11t] [%X{domain}] - %m%n</pattern>
+        </encoder>
+    </appender>
+    <root level="DEBUG">
+        <appender-ref ref="console" />
+    </root>
+
+    <logger name="com.ning" level="INFO" />
+    <logger name="org" level="INFO" />
+
+    <logger name="com.alibaba" level="ERROR" />
+    <logger name="org.apache" level="ERROR" />
+    <logger name="org.springframework" level="DEBUG" />
+</configuration>

@@ -1,17 +1,6 @@
 use sachin_wiki;
 set names utf8mb4;
 
-CREATE TABLE wiki_article (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `article_title` VARCHAR(100) NOT NULL COMMENT '文章标题',
-  `article_author` VARCHAR(20) NOT NULL COMMENT '文章作者',
-  `parent_id` INT UNSIGNED NOT NULL DEFAULT '0' COMMENT '父文章id',
-  `vm_path` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '静态文件路径',
-  `create_time` TIMESTAMP NOT NULL DEFAULT current_timestamp COMMENT '创建时间',
-  PRIMARY KEY (`id`),
-  KEY `idx_article_title` (`article_title`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='wiki文章表';
-
 DROP TABLE IF EXISTS wiki_catalog;
 
 CREATE TABLE wiki_catalog (

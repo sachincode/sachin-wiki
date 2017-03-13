@@ -1,0 +1,16 @@
+#set($layout="layout/blank.vm")
+
+<div class="main-container">
+    <div class="row" style="padding-top:13%;">
+        <div class="center">
+            <h2>
+                <span class="blue">SACHIN WIKI</span>
+            </h2>
+        </div>
+        <div class="center">
+            <button id="loginButton" class="btn btn-sm btn-primary">
+                登录
+            </button>
+        </div> 
+    </div>
+</div>

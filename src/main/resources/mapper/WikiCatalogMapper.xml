@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sachin.wiki.dao.WikiCatalogMapper">
+
+    <resultMap id="wikiCatalog" type="com.sachin.wiki.model.WikiCatalog">
+        <id property="id" column="id"/>
+        <result property="wikiId" column="wiki_id"/>
+        <result property="articleTitle" column="article_title"/>
+        <result property="articleAuthor" column="article_author"/>
+        <result property="parentWikiId" column="parent_wiki_id"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <sql id="selectSql">
+        <![CDATA[
+            select
+                id,
+                wiki_id,
+                article_title,
+                article_author,
+                parent_wiki_id,
+                update_time,
+                create_time
+            from
+                wiki_catalog
+        ]]>
+    </sql>
+
+    <sql id="whereSql">
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="wikiId != null and wikiId != ''">
+                and wiki_id = #{wikiId}
+            </if>
+            <if test="article_title != null and article_title != ''">
+                and article_title = #{articleTitle}
+            </if>
+        </where>
+    </sql>
+
+    <select id="select" parameterType="map" resultMap="wikiCatalog">
+        <include refid="selectSql"/>
+        <include refid="whereSql"/>
+    </select>
+
+    <select id="selectCount" parameterType="map" resultType="java.lang.Integer">
+        <![CDATA[
+            select
+                count(*)
+            from
+                wiki_catalog
+        ]]>
+        <include refid="whereSql"/>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" parameterType="com.sachin.wiki.model.WikiCatalog" keyProperty="id">
+        <![CDATA[
+            insert into wiki_catalog (
+                wiki_id,article_title,article_author,parent_wiki_id,create_time,update_time
+            ) values (
+                #{wikiId},#{articleTitle},#{articleAuthor},#{parentWikiId},now(),now()
+            )
+        ]]>
+    </insert>
+
+    <update id="update" parameterType="com.sachin.wiki.model.WikiCatalog">
+        update wiki_catalog
+        <set>
+            <if test="articleTitle != null">
+                article_title=#{articleTitle},
+            </if>
+            <if test="articleAuthor != null">
+                article_author=#{articleAuthor},
+            </if>
+            <if test="parentWikiId != null">
+                parent_wiki_id=#{parentWikiId},
+            </if>
+        </set>
+        where wiki_id = #{wikiId}
+    </update>
+</mapper>
