@@ -1,12 +1,16 @@
 package com.sachin.wiki.controller;
 
 import com.sachin.wiki.model.WikiDto;
+import com.sachin.wiki.model.ZTreeNode;
 import com.sachin.wiki.service.WikiArticleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author shicheng.zhang
@@ -38,5 +42,15 @@ public class WikiPageControlelr {
             modelAndView.addObject("wiki_content", "<label><font color=\"red\">wiki不存在</font></label>");
         }
         return modelAndView;
+    }
+
+    @RequestMapping("getCatalogTree.do")
+    @ResponseBody
+    public List<ZTreeNode> getCatalogTree(@RequestParam(required = false)Long wikiId) {
+        if (wikiId == null) {
+            return wikiArticleService.getCatalogTree();
+        } else {
+            return wikiArticleService.getCatalogTree(wikiId);
+        }
     }
 }

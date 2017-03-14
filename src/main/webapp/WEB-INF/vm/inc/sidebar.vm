@@ -8,29 +8,32 @@
             <b class="arrow"></b>
         </li>
         <li>
-            <a href="#" class="dropdown-toggle">
-                <i class="menu-icon fa fa-desktop"></i>
-                <span class="menu-text">UI &amp; Elements</span>
-
-                <b class="arrow fa fa-angle-down"></b>
-            </a>
-            <b class="arrow"></b>
-            <ul class="submenu">
-                <li>
-                    <a href="#" class="dropdown-toggle">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Layouts
-                    </a>
-                    <b class="arrow"></b>
-                </li>
-                <li>
-                    <a href="#">
-                    <i class="menu-icon fa fa-caret-right"></i>
-                    Typography
-                    </a>
-                    <b class="arrow"></b>
-                </li>
-            </ul>
+##            <a href="#" class="dropdown-toggle">
+##                <i class="menu-icon fa fa-desktop"></i>
+##                <span class="menu-text">UI &amp; Elements</span>
+##
+##                <b class="arrow fa fa-angle-down"></b>
+##            </a>
+##            <b class="arrow"></b>
+##            <ul class="submenu">
+##                <li>
+##                    <a href="#" class="dropdown-toggle">
+##                        <i class="menu-icon fa fa-caret-right"></i>
+##                        Layouts
+##                    </a>
+##                    <b class="arrow"></b>
+##                </li>
+##                <li>
+##                    <a href="#">
+##                    <i class="menu-icon fa fa-caret-right"></i>
+##                    Typography
+##                    </a>
+##                    <b class="arrow"></b>
+##                </li>
+##            </ul>
+            <div class="zTreeDemoBackground left">
+                <ul id="treeWikiCatalog" class="ztree"></ul>
+            </div>
         </li>
     </ul> <!-- /.nav-list -->
 

@@ -4,6 +4,8 @@
 <script src="/js/ace-elements.min.js"></script>
 <script src="/js/ace.min.js"></script>
 <script src="/js/avalon.js"></script>
+<script src="/js/jquery.ztree.core.js"></script>
+
 <script src="/js/app.js"></script>
 
 <!-- include system javascript resources -->

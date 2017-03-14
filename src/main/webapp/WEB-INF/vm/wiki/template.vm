@@ -1,4 +1,5 @@
 <div class="col-xs-12">
     $!{wiki_content}
 </div>
+
 #include('inc/script.vm')
